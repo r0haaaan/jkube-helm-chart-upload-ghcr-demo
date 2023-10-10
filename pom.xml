@@ -16,6 +16,7 @@
     <skipITs>true</skipITs>
     <surefire-plugin.version>3.1.2</surefire-plugin.version>
     <jkube.version>1.15-SNAPSHOT</jkube.version>
+    <jkube.generator.name>ghcr.io/r0haaaan/%a:%v</jkube.generator.name>
   </properties>
   <dependencyManagement>
     <dependencies>
