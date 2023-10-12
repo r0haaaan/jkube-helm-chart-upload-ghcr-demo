@@ -1,0 +1,51 @@
+plugins {
+    id 'java'
+    id 'io.quarkus'
+    id 'org.eclipse.jkube.kubernetes' version '1.15-SNAPSHOT'
+    id 'org.eclipse.jkube.openshift' version '1.15-SNAPSHOT'
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
+    implementation 'io.quarkus:quarkus-resteasy-reactive'
+    implementation 'io.quarkus:quarkus-arc'
+    testImplementation 'io.quarkus:quarkus-junit5'
+    testImplementation 'io.rest-assured:rest-assured'
+}
+
+group 'org.eclipse.jkube'
+version '1.0.0-SNAPSHOT'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+test {
+    systemProperty "java.util.logging.manager", "org.jboss.logmanager.LogManager"
+}
+compileJava {
+    options.encoding = 'UTF-8'
+    options.compilerArgs << '-parameters'
+}
+
+compileTestJava {
+    options.encoding = 'UTF-8'
+}
+
+kubernetes {
+    helm {
+        snapshotRepository {
+            name = 'GitHub'
+            url = "https://ghcr.io/" + System.getenv("HELM_REPO_PATH")
+            type = 'OCI'
+            username = System.getenv("HELM_REPO_USERNAME")
+            password = System.getenv("HELM_REPO_PASSWORD")
+        }
+    }
+}

@@ -62,6 +62,7 @@
               <url>https://ghcr.io/r0haaaan/helm</url>
               <type>OCI</type>
               <username>r0haaaan</username>
+              <password>${env.GHCR_PASSWORD}</password>
             </snapshotRepository>
           </helm>
         </configuration>
